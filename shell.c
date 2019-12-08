@@ -56,7 +56,9 @@ int main(int argc, char * argv[]){
       while (commands[i] != NULL){
         //doesn't work for now!
         char ** args = parse_args(commands[i]);
-        printf("%s\n", args);
+        if(fork() == 0) {
+            execvp(args[0], args);
+        }
         i++;
       }
     }else{
