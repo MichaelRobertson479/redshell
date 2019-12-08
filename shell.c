@@ -19,12 +19,12 @@ char * rmfs( char * line) {
 
 //remove back spaces
 char * rmbs( char * line) {
-  while (*line != '/0') {
+  while (*line != '\0') {
     line++;
   }
   line--;
   while (*line == ' ') {
-    *line = '/0';
+    *line = '\0';
     line--;
   }
   return line;
