@@ -14,7 +14,7 @@
 
 //remove front spaces
 char * rmfs( char * line) {
-  char * current = line
+  char * current = line;
   while (current == " ") {
     current++;
   }
