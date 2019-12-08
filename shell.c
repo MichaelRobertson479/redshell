@@ -26,11 +26,19 @@ char ** parse_many( char * line ){
   char * current = line;
   int i = 0;
   while (current != NULL) {
-    args[i] = strsep(&current, " ;");
+    args[i] = rmfs(strsep(&current, ";"));
     i++;
   }
   args[i] = NULL;
   return args;
+}
+
+//remove front spaces
+char ** rmfs( char * line) {
+  while (*line == " ") {
+    line++;
+  }
+  return line;
 }
 
 int main(int argc, char * argv[]){
@@ -67,7 +75,8 @@ int main(int argc, char * argv[]){
 
       char ** args = parse_args(name);
 
-      //make it work for ' exit'
+      //make it work for ' exit' 
+      //'exit' doesnt work for me - mdr
       //https://stackoverflow.com/questions/1488372/mimic-pythons-strip-function-in-c
       if (strcmp(args[0], "exit") == 0){
         running = 0;
