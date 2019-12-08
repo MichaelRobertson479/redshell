@@ -9,6 +9,17 @@
 #include <sys/wait.h>
 #include <dirent.h>
 
+
+
+
+//remove front spaces
+char * rmfs( char * line) {
+  while (line == " ") {
+    line++;
+  }
+  return line;
+}
+
 char ** parse_args( char * line ){
   char ** args = malloc(sizeof(char*) * 10);
   char * current = line;
@@ -31,14 +42,6 @@ char ** parse_many( char * line ){
   }
   args[i] = NULL;
   return args;
-}
-
-//remove front spaces
-char * rmfs( char * line) {
-  while (line == " ") {
-    line++;
-  }
-  return line;
 }
 
 int main(int argc, char * argv[]){
