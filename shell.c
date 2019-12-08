@@ -19,16 +19,16 @@ char * rmfs( char * line) {
 
 //remove back spaces
 char * rmbs( char * line) {
-  char * current = line;
-  while (*current != '\0') {
-    current++;
+  char * current;
+  while (*line != '\0') {
+    line++;
   }
-  current--;
-  while (*current == ' ') {
-    *current = '\0';
-    current--;
+  line--;
+  while (*line == ' ') {
+    *line = '\0';
+    line--;
   }
-  return line;
+  return current;
 }
 
 char ** parse_args( char * line ){
