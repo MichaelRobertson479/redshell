@@ -34,14 +34,19 @@ char ** parse_many( char * line ){
 }
 
 //remove front spaces
-char ** rmfs( char * line) {
-  while (*line == " ") {
+char * rmfs( char * line) {
+  while (line == " ") {
     line++;
   }
   return line;
 }
 
 int main(int argc, char * argv[]){
+  printf("test of rmfs:\n");
+  printf("input: '   apple is blue   '\n");
+  char * test = "    apple is blue    ";
+  printf("result: %s\n",rmfs(test));
+
   int running = 1;
   while (running){
     char name[500];
