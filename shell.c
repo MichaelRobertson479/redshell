@@ -78,7 +78,6 @@ int main(int argc, char * argv[]){
       printf("%s\n",commands[0]);
       printf("%s\n",commands[1]);
       int i = 0;
-      // ls;ls works, ls ; ls doesn't
       while (commands[i] != NULL){
         char ** args = parse_args(commands[i]);
         if(fork() == 0) {
