@@ -83,8 +83,11 @@ int main(int argc, char * argv[]){
         char ** args = parse_args(commands[i]);
         if(fork() == 0) {
             execvp(args[0], args);
-            i++;
         }
+        else {
+          wait();
+        }
+        i++;
       }
     }else{
 
