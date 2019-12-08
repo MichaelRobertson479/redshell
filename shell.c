@@ -21,10 +21,12 @@ char * rmfs( char * line) {
 char * rmbs( char * line) {
   char * current = line;
   while (*line != '\0') {
+    printf("%s\n",line);
     line++;
   }
   line--;
   while (*line == ' ') {
+    printf("%s\n",current);
     *line = '\0';
     line--;
   }
