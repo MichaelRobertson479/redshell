@@ -60,7 +60,7 @@ char ** parse_many( char * line ){
 int main(int argc, char * argv[]){
   printf("test of rmbs:\n");
   printf("input: '   apple is blue   '\n");
-  char * test = "    apple is blue    ";
+  char * test = {' ',' ',' ','a','p','l','e',' ','i','s',' ','b','l','u',' ',' ','\0'};
   printf("result: %s\n",rmbs(test));
 
   int running = 1;
