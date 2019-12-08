@@ -55,10 +55,10 @@ char ** parse_many( char * line ){
 }
 
 int main(int argc, char * argv[]){
-  printf("test of rmfs and rmbs:\n");
+  printf("test of rmbs:\n");
   printf("input: '   apple is blue   '\n");
   char * test = "    apple is blue    ";
-  printf("result: %s\n",rmfs(rmbs(test)));
+  printf("result: %s\n",rmbs(test));
 
   int running = 1;
   while (running){
