@@ -21,12 +21,10 @@ char * rmfs( char * line) {
 char * rmbs( char * line) {
   char * current = line;
   while (*line != '\0') {
-    printf("%s\n",line);
     line++;
   }
   line--;
   while (*line == ' ') {
-    printf("%s\n",current);
     line = '\0';
     line--;
   }
@@ -50,7 +48,7 @@ char ** parse_many( char * line ){
   char * current = line;
   int i = 0;
   while (current != NULL) {
-    args[i] = rmfs(strsep(&current, ";"));
+    args[i] = rmbs(rmfs(strsep(&current, ";")));
     i++;
   }
   args[i] = NULL;
@@ -58,10 +56,6 @@ char ** parse_many( char * line ){
 }
 
 int main(int argc, char * argv[]){
-  printf("test of rmbs:\n");
-  printf("input: '   apple is blue   '\n");
-  char * test = {' ',' ',' ','a','p','l','e',' ','i','s',' ','b','l','u',' ',' ','\0'};
-  printf("result: %s\n",rmbs(test));
 
   int running = 1;
   while (running){
