@@ -52,6 +52,8 @@ int main(int argc, char * argv[]){
 
     if(strstr(name, ";") != NULL) {
       char ** commands = parse_many(name);
+      printf("%s\n",commands[0]);
+      printf("%s\n",commands[1]);
       int i = 0;
       // ls;ls works, ls ; ls doesn't
       while (commands[i] != NULL){
