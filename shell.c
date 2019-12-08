@@ -52,12 +52,12 @@ int main(int argc, char * argv[]){
 
     if(strstr(name, ";") != NULL) {
       char ** commands = parse_many(name);
-      printf("%s\n",commands[0]);
-      while (commands != NULL){
+      int i = 0;
+      while (commands[i] != NULL){
         //doesn't work for now!
-        // char ** args = parse_args(commands);
-        // printf("%s\n", args);
-        // commands++;
+        char ** args = parse_args(commands[i]);
+        printf("%s\n", args);
+        i++;
       }
     }else{
 
