@@ -26,7 +26,7 @@ char ** parse_many( char * line ){
   char * current = line;
   int i = 0;
   while (current != NULL) {
-    args[i] = rmfs(*strsep(&current, ";"));
+    args[i] = rmfs(strsep(&current, ";"));
     i++;
   }
   args[i] = NULL;
