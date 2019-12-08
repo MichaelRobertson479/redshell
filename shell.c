@@ -14,10 +14,11 @@
 
 //remove front spaces
 char * rmfs( char * line) {
-  while (line == " ") {
-    line++;
+  char * current = line
+  while (current == " ") {
+    current++;
   }
-  return line;
+  return current;
 }
 
 char ** parse_args( char * line ){
