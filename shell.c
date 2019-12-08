@@ -27,7 +27,7 @@ char * rmbs( char * line) {
   line--;
   while (*line == ' ') {
     printf("%s\n",current);
-    *line = '\0';
+    line = '\0';
     line--;
   }
   return current;
