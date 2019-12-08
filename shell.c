@@ -26,7 +26,7 @@ char ** parse_many( char * line ){
   char * current = line;
   int i = 0;
   while (current != NULL) {
-    args[i] = strsep(&current, ";");
+    args[i] = strsep(&current, " ; ");
     i++;
   }
   args[i] = NULL;
@@ -53,8 +53,8 @@ int main(int argc, char * argv[]){
     if(strstr(name, ";") != NULL) {
       char ** commands = parse_many(name);
       int i = 0;
+      // ls;ls works, ls ; ls doesn't
       while (commands[i] != NULL){
-        //doesn't work for now!
         char ** args = parse_args(commands[i]);
         if(fork() == 0) {
             execvp(args[0], args);
