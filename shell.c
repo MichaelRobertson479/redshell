@@ -85,7 +85,7 @@ int main(int argc, char * argv[]){
             execvp(args[0], args);
         }
         else {
-          wait();
+          wait(NULL);
         }
         i++;
       }
