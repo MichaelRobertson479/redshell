@@ -9,13 +9,23 @@
 #include <sys/wait.h>
 #include <dirent.h>
 
-
-
-
 //remove front spaces
 char * rmfs( char * line) {
   while (*line == ' ') {
     line++;
+  }
+  return line;
+}
+
+//remove back spaces
+char * rmbs( char * line) {
+  while (*line != '/0') {
+    line++;
+  }
+  line--;
+  while (*line == ' ') {
+    *line = '/0';
+    line--;
   }
   return line;
 }
@@ -45,10 +55,10 @@ char ** parse_many( char * line ){
 }
 
 int main(int argc, char * argv[]){
-  printf("test of rmfs:\n");
+  printf("test of rmfs and rmbs:\n");
   printf("input: '   apple is blue   '\n");
   char * test = "    apple is blue    ";
-  printf("result: %s\n",rmfs(test));
+  printf("result: %s\n",rmfs(rmbs(test)));
 
   int running = 1;
   while (running){
