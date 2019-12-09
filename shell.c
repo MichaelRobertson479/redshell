@@ -43,6 +43,18 @@ char ** parse_args( char * line ){
   return args;
 }
 
+char ** parse_redir ( char * line ){
+  char ** args = malloc(sizeof(char*) * 10);
+  char * current = line;
+  int i = 0;
+  while (current != NULL) {
+    args[i] = strsep(&current, "<>");
+    i++;
+  }
+  args[i] = NULL;
+  return args;
+}
+
 char ** parse_many( char * line ){
   char ** args = malloc(sizeof(char*) * 10);
   char * current = line;
@@ -54,6 +66,20 @@ char ** parse_many( char * line ){
   args[i] = NULL;
   return args;
 }
+
+void redirect (char * line) {
+
+	args = parse_redir(line);
+
+	if (strcmp(args[1],">") == 0) {
+      		
+		//redirect to args[2]
+		file = open(args[2],O_WRONLY);
+		dup2(1)
+		
+	}
+
+}	
 
 int main(int argc, char * argv[]){
 
@@ -75,8 +101,6 @@ int main(int argc, char * argv[]){
 
     if(strstr(name, ";") != NULL) {
       char ** commands = parse_many(name);
-      printf("%s\n",commands[0]);
-      printf("%s\n",commands[1]);
       int i = 0;
       while (commands[i] != NULL){
         char ** args = parse_args(commands[i]);
@@ -92,8 +116,7 @@ int main(int argc, char * argv[]){
 
       char ** args = parse_args(name);
 
-      //make it work for ' exit' 
-      //'exit' doesnt work for me - mdr
+      //make it work for ' exit'
       //https://stackoverflow.com/questions/1488372/mimic-pythons-strip-function-in-c
       if (strcmp(args[0], "exit") == 0){
         running = 0;
