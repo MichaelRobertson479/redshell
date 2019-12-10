@@ -43,18 +43,6 @@ char ** parse_args( char * line ){
   return args;
 }
 
-char ** parse_redir ( char * line ){
-  char ** args = malloc(sizeof(char*) * 10);
-  char * current = line;
-  int i = 0;
-  while (current != NULL) {
-    args[i] = strsep(&current, "<>");
-    i++;
-  }
-  args[i] = NULL;
-  return args;
-}
-
 char ** parse_many( char * line ){
   char ** args = malloc(sizeof(char*) * 10);
   char * current = line;
@@ -67,19 +55,42 @@ char ** parse_many( char * line ){
   return args;
 }
 
-void redirect (char * line) {
+char ** parse_redir( char * line ){
+  char ** args = malloc(sizeof(char*) * 10);
+  char * current = line;
+  int i = 0;
+  while (current != NULL) {
+    args[i] = strsep(&current, "<>");
+    i++;
+  }
+  args[i] = NULL;
+  return args;
+}
 
-	args = parse_redir(line);
+//add error messages (maybe)
+int redirect (char * line, int x) {
 
-	if (strcmp(args[1],">") == 0) {
-      		
-		//redirect to args[2]
-		file = open(args[2],O_WRONLY);
-		dup2(1)
-		
+  // > redirect
+	if (x > 0) {
+
+    char ** inputs = parse_redir(line);
+
+	  int file = open(inputs[1],O_WRONLY);
+    int new = dup(STDOUT_FILENO);
+		dup2(file,STDOUT_FILENO);
+
+    char ** args = parse_args(inputs[0]);
+
+    if(fork() == 0) {
+        execvp(args[0], args);
+    }
+    //redirect back INTO stdout
+    dup2(new, file);
 	}
 
-}	
+  //else if(x < 0)
+  return 0;
+}
 
 int main(int argc, char * argv[]){
 
@@ -99,6 +110,7 @@ int main(int argc, char * argv[]){
 
     //printf("%p\n", strstr(name,";"));
 
+    //add in redirect check
     if(strstr(name, ";") != NULL) {
       char ** commands = parse_many(name);
       int i = 0;
@@ -114,25 +126,36 @@ int main(int argc, char * argv[]){
       }
     }else{
 
-      char ** args = parse_args(name);
+        if (strstr(name,">") != NULL) {
+          //printf("detects >\n");
+          redirect(name,1);
+        }
 
-      //make it work for ' exit'
-      //https://stackoverflow.com/questions/1488372/mimic-pythons-strip-function-in-c
-      if (strcmp(args[0], "exit") == 0){
-        running = 0;
-      }
+        else {
 
-      //make it work for 'cd' with no secondary args
-      if (strcmp(args[0],"cd") == 0) {
-          chdir(args[1]);
-      }
-      else if (fork() == 0){
-        execvp(args[0], args);
-      }
+          char ** args = parse_args(name);
+
+          //make it work for ' exit'
+          //https://stackoverflow.com/questions/1488372/mimic-pythons-strip-function-in-c
+          if (strcmp(args[0], "exit") == 0){
+            running = 0;
+          }
+
+          //make it work for 'cd' with no secondary args
+          if (strcmp(args[0],"cd") == 0) {
+              chdir(args[1]);
+          }
+
+
+
+          else if (fork() == 0){
+            execvp(args[0], args);
+          }
 
       // int status;
       // wait(&status);
       // exit(0);
+      }
     }
   }
   return 0;
