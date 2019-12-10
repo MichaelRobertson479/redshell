@@ -74,17 +74,17 @@ int redirect (char * line, int x) {
 
 	// > redirect
 	if (x > 0) {
-		char ** inputs = parse_redir(line);
-
-	  	int file = open(inputs[1],O_WRONLY);
-
-   		char ** args = parse_args(inputs[0]);
     		if(fork() == 0) {
 			
+			char ** inputs = parse_redir(line);
+
+	  		int file = open(inputs[1],O_TRUNC|O_WRONLY);
+
+   			char ** args = parse_args(inputs[0]);
 			dup2(file,STDOUT_FILENO);
        			execvp(args[0], args);	
+			close(file);
     		}
-		close(file);
 	}
 	
 	//else if(x < 0)
