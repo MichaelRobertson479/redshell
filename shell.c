@@ -60,7 +60,7 @@ char ** parse_redir( char * line ){
   char * current = line;
   int i = 0;
   while (current != NULL) {
-    args[i] = strsep(&current, "<>");
+    args[i] = rmbs(rmfs(strsep(&current, "<>")));
     i++;
   }
   args[i] = NULL;
@@ -70,26 +70,25 @@ char ** parse_redir( char * line ){
 //add error messages (maybe)
 int redirect (char * line, int x) {
 
-  // > redirect
+	
+
+	// > redirect
 	if (x > 0) {
+		char ** inputs = parse_redir(line);
 
-    char ** inputs = parse_redir(line);
+	  	int file = open(inputs[1],O_WRONLY);
 
-	  int file = open(inputs[1],O_WRONLY);
-    int new = dup(STDOUT_FILENO);
-		dup2(file,STDOUT_FILENO);
-
-    char ** args = parse_args(inputs[0]);
-
-    if(fork() == 0) {
-        execvp(args[0], args);
-    }
-    //redirect back INTO stdout
-    dup2(new, file);
+   		char ** args = parse_args(inputs[0]);
+    		if(fork() == 0) {
+			
+			dup2(file,STDOUT_FILENO);
+       			execvp(args[0], args);	
+    		}
+		close(file);
 	}
-
-  //else if(x < 0)
-  return 0;
+	
+	//else if(x < 0)
+	return 0;
 }
 
 int main(int argc, char * argv[]){
