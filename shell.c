@@ -90,6 +90,17 @@ int redirect (char * line, int x) {
   //else if(x < 0)
   if (x < 0) {
     printf("thisisatest\n");
+    // if(fork() == 0) {
+			
+		// 	char ** inputs = parse_redir(line);
+
+	  // 		int file = open(inputs[1],O_RDONLY);
+
+   	// 		char ** args = parse_args(inputs[0]);
+		// 	dup2(file,STDIN_FILENO);
+    //    			execvp(args[0], args);	
+		// 	close(file);
+    // 		}
   }
 	
 	return 0;
