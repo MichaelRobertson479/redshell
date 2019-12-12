@@ -86,8 +86,12 @@ int redirect (char * line, int x) {
 			close(file);
     		}
 	}
+
+  //else if(x < 0)
+  if (x < 0) {
+    printf("thisisatest\n");
+  }
 	
-	//else if(x < 0)
 	return 0;
 }
 
@@ -128,6 +132,11 @@ int main(int argc, char * argv[]){
         if (strstr(name,">") != NULL) {
           //printf("detects >\n");
           redirect(name,1);
+        }
+
+        else if (strstr(name,"<") != NULL) {
+          printf("detects <\n");
+          redirect(name,-1);
         }
 
         else {
