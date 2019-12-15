@@ -142,7 +142,7 @@ int mario (char * name) {
 
   if (fork() == 0) {
     popen(inputs[0],"r");
-    popen(int[1],"w");
+    popen(inputs[1],"w");
     run(inputs[0]);
   }
 
