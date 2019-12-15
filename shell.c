@@ -143,7 +143,8 @@ int mario (char * name) {
   if (fork() == 0) {
     popen(inputs[0],"r");
     popen(inputs[1],"w");
-    run(inputs[0]);
+    char ** args = parse_args(rmfs(inputs[0]));
+    execvp(args[0], args);
   }
 
   return 0;
