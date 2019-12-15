@@ -171,15 +171,15 @@ void mario (char * name) {
 
   FILE * p;
 
-  // if (fork() == 0) {
-    dup2(fileno(p),STDOUT_FILENO);
+  if (fork() == 0) {
+    dup2(fileno(p),STDIN_FILEOUT);
     p = popen(commands[0],"r");
     printf("gets here 6\n");
 
     execvp(args[0],args);
     
     printf("gets here 7\n");
-  // }
+  }
 
 }
 
