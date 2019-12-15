@@ -169,9 +169,10 @@ void mario (char * name) {
   char ** args = parse_args(commands[1]);
   printf("gets here 3\n");
   //our pipe
-  FILE * p; 
 printf("gets here 4\n");
   if (fork() == 0) {
+    
+    FILE * p; 
     //reading from pipe to stdin
     printf("gets here 4.5\n");
     dup2(fileno(p),STDIN_FILENO);
@@ -180,9 +181,10 @@ printf("gets here 4\n");
     printf("gets here 6\n");
     execvp(args[0],args);
     printf("gets here 7\n");
+    
+    fclose(p);
   }
 
-  fclose(p);
 }
 
 int run (char * name) {
