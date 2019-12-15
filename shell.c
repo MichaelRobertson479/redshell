@@ -169,12 +169,13 @@ void mario (char * name) {
   args[0] = commands[1];
   args[1] = NULL;
 
-  
-    
-    FILE * p;
-    dup2(fileno(p),STDIN_FILENO);
-    printf("gets here 5\n");
-    p = popen(commands[0],"r");
+  FILE * p;
+  dup2(fileno(p),STDIN_FILENO);
+  printf("gets here 5\n");
+  p = popen(commands[0],"r");
+  if(fp == NULL) {
+    printf("oof\n");
+  }
   if (fork() == 0) {
     printf("gets here 6\n");
     execvp(args[0],args);
