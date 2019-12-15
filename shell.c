@@ -177,9 +177,12 @@ void mario (char * name) {
     printf("gets here 6\n");
     int i;
     wait(&i);
-    execvp(args[0],args);
     
     printf("gets here 7\n");
+    execvp(args[0],args);
+    
+    printf("gets here 8\n");
+    
   }
 
 }
