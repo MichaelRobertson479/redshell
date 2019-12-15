@@ -80,7 +80,7 @@ char ** parse_pipe( char * line ){
 }
 
 //add error messages (maybe)
-int redirect (char * line, int x) {
+void redirect (char * line, int x) {
 
 // double redirect
 if (x == 0) {
@@ -133,10 +133,9 @@ close(file);
       }
   }
 
-return 0;
 }
 
-int mario (char * name) {
+void mario (char * name) {
 
   char ** inputs = parse_pipe(name);
 
@@ -154,7 +153,6 @@ int mario (char * name) {
 
   if (fork() == 0) {
     dup2(desc[0],STDIN_FILENO);
-    
     close(desc[1]);
     char ** args = parse_args(rmfs(rmbs(inputs[0])));
     execvp(args[0],args);
@@ -162,7 +160,7 @@ int mario (char * name) {
 
   close(desc[1]);
   close(desc[0]);
-  return 0;
+  wait(&i);
 }
 
 int run (char * name) {
