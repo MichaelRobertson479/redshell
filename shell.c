@@ -126,7 +126,11 @@ return 0;
 
 int run (char * name) {
 
-if (strstr(name,">") != NULL && strstr(name,"<") != NULL) {
+        if (strstr(name,"|") != NULL) {
+          printf("detects pipe\n");
+        }
+
+        else if (strstr(name,">") != NULL && strstr(name,"<") != NULL) {
           //printf("detects double arrow\n");
           redirect(name,0);
         }
