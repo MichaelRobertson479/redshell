@@ -167,6 +167,7 @@ void mario (char * name) {
   char ** commands = parse_pipe(name);
   printf("gets here 2\n");
   char ** args = parse_args(commands[1]);
+  printf("gets here 3\n");
   //our pipe
   FILE * p; 
 
