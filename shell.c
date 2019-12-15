@@ -141,6 +141,7 @@ int mario (char * name) {
   char ** inputs = parse_pipe(name);
 
   if (fork() == 0) {
+    printf("gets here\n");
     popen(inputs[1],"w");
     popen(inputs[0],"r");
   }
