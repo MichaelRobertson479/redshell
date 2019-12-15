@@ -175,7 +175,9 @@ void mario (char * name) {
     dup2(fileno(p),STDIN_FILENO);
     p = popen(commands[0],"r");
     printf("gets here 6\n");
-    execvp(args[0],args);
+    if (fork() == 0) {
+      execvp(args[0],args);
+    }
     printf("gets here 7\n");
   }
 
