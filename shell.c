@@ -67,6 +67,18 @@ char ** parse_redir( char * line ){
   return args;
 }
 
+char ** parse_pipe( char * line ){
+  char ** args = malloc(sizeof(char*) * 3);
+  char * current = line;
+  int i = 0;
+  while (current != NULL) {
+    args[i] = rmbs(rmfs(strsep(&current, "|")));
+    i++;
+  }
+  args[i] = NULL;
+  return args;
+}
+
 //add error messages (maybe)
 int redirect (char * line, int x) {
 
@@ -124,10 +136,23 @@ close(file);
 return 0;
 }
 
+int mario (char * name) {
+
+  char ** inputs = parse_pipe(name);
+
+  if (fork() == 0) {
+    popen(inputs[1],"w");
+    popen(inputs[0],"r");
+  }
+
+  return 0;
+}
+
 int run (char * name) {
 
         if (strstr(name,"|") != NULL) {
-          printf("detects pipe\n");
+          //printf("detects pipe\n");
+          mario(name);
         }
 
         else if (strstr(name,">") != NULL && strstr(name,"<") != NULL) {
