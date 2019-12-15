@@ -150,7 +150,7 @@ void mario (char * name) {
 int run (char * name) {
 
         if (strstr(name,"|") != NULL) {
-          printf("detects pipe\n");
+          //printf("detects pipe\n");
           mario(name);
         }
 
