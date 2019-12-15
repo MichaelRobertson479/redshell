@@ -161,18 +161,20 @@ close(file);
 //   close(desc[0]);
 // }
 
+//currently doesn't work if spaces
 void mario (char * name) {
 
   char ** commands = parse_pipe(name);
-
+  char ** args = {commands[1],NULL};
   //our pipe
-  FILE * p;
+  FILE * p; 
 
-  //executes left command, writes to pipe
-  p = popen(commands[0],"r");
-
-  //executes right command, reads from pipe
-  p = popen(commands[1],"w");
+  if (fork() == 0) {
+    //reading from pipe to stdin
+    dup2(fileno(p),STDIN_FILENO);
+    p = popen(commands[0],"r");
+    execvp(args[0],args);
+  }
 
   fclose(p);
 }
