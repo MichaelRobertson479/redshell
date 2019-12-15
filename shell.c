@@ -138,14 +138,15 @@ close(file);
 void mario (char * name) {
 
   char ** inputs = parse_pipe(name);
+  char ** args0 = parse_args(rmfs(rmbs(inputs[0])));
+  char ** args1 = parse_args(rmfs(rmbs(inputs[1])));
 
   int desc[2];
   pipe(desc);
 
   if (fork() == 0) {
     dup2(desc[1],STDOUT_FILENO);
-    char ** args = parse_args(rmfs(rmbs(inputs[1])));
-    execvp(args[0],args);
+    execvp(args0[0],args0);
   }
 
   int i;
@@ -154,8 +155,7 @@ void mario (char * name) {
   if (fork() == 0) {
     dup2(desc[0],STDIN_FILENO);
     close(desc[1]);
-    char ** args = parse_args(rmfs(rmbs(inputs[0])));
-    execvp(args[0],args);
+    execvp(args1[0],args1);
   }
 
   close(desc[1]);
