@@ -207,6 +207,7 @@ return 1;
 int main(int argc, char * argv[]){
 
   getcwd(home,100);
+  printf("home: %s\n",home);
   int running = 1;
 
   while (running) {
