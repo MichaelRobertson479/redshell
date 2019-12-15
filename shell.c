@@ -135,36 +135,52 @@ close(file);
 
 }
 
+// void mario (char * name) {
+
+  
+//   char ** inputs = parse_pipe(name);
+  
+//   int desc[2];
+//   pipe(desc);
+
+//   if (fork() == 0) {
+//     dup2(desc[1],STDOUT_FILENO);
+//     char ** args0 = parse_args(inputs[0]);
+//     execvp(args0[0],args0);
+//   }
+
+
+//   if (fork() == 0) {
+//     dup2(desc[0],STDIN_FILENO);
+//     char ** args1 = parse_args(inputs[1]);
+//     close(desc[1]);
+//     execvp(args1[0],args1);
+//   }
+
+//   close(desc[1]);
+//   close(desc[0]);
+// }
+
 void mario (char * name) {
 
-  
-  char ** inputs = parse_pipe(name);
-  
-  int desc[2];
-  pipe(desc);
+  char ** commands = parse_pipe(name);
 
-  if (fork() == 0) {
-    dup2(desc[1],STDOUT_FILENO);
-    char ** args0 = parse_args(inputs[0]);
-    execvp(args0[0],args0);
-  }
+  //our pipe
+  FILE * p;
 
+  //executes left command, writes to pipe
+  p = popen(commands[0],"r");
 
-  if (fork() == 0) {
-    dup2(desc[0],STDIN_FILENO);
-    char ** args1 = parse_args(inputs[1]);
-    close(desc[1]);
-    execvp(args1[0],args1);
-  }
+  //executes right command, reads from pipe
+  p = popen(commands[1],"w");
 
-  close(desc[1]);
-  close(desc[0]);
+  close(p);
 }
 
 int run (char * name) {
 
         if (strstr(name,"|") != NULL) {
-          printf("detects pipe\n");
+          //printf("detects pipe\n");
           mario(name);
         }
 
