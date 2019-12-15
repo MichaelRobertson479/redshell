@@ -68,7 +68,7 @@ char ** parse_redir( char * line ){
 }
 
 char ** parse_pipe( char * line ){
-  char ** args = malloc(sizeof(char*) * 3);
+  char ** args = malloc(sizeof(char*) * 10);
   char * current = line;
   int i = 0;
   while (current != NULL) {
