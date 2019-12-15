@@ -176,6 +176,7 @@ void mario (char * name) {
     p = popen(commands[0],"r");
     printf("gets here 6\n");
     if (fork() == 0) {
+      printf("doesnt get here\n");
       execvp(args[0],args);
     }
     printf("gets here 7\n");
