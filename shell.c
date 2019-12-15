@@ -151,8 +151,6 @@ void mario (char * name) {
     execvp(args0[0],args0);
   }
 
-  int i;
-  wait(&i);
 
   if (fork() == 0) {
     dup2(desc[0],STDIN_FILENO);
