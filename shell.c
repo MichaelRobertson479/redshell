@@ -170,7 +170,7 @@ void mario (char * name) {
 
   FILE * p;
   dup2(fileno(p),STDIN_FILENO);
-  p = popen(command[0],"r");
+  p = popen(commands[0],"r");
   execvp(args[0],args);
   pclose(p);
 
