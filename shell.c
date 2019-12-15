@@ -9,7 +9,7 @@
 #include <sys/wait.h>
 #include <dirent.h>
 
-char * home;
+char home[100];
 
 //remove front spaces
 char * rmfs( char * line) {
@@ -206,7 +206,7 @@ return 1;
 
 int main(int argc, char * argv[]){
 
-  home = getcwd();
+  getcwd(home,100);
   int running = 1;
 
   while (running) {
