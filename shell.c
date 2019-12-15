@@ -141,10 +141,8 @@ void mario (char * name) {
   char ** inputs = parse_pipe(name);
   
   
-  char ** args0 = parse_args(rmfs(rmbs(inputs[0])));
-  
-printf("gets here\n");
-  char ** args1 = parse_args(rmfs(rmbs(inputs[1])));
+  char ** args0 = parse_args(inputs[0]);
+  char ** args1 = parse_args(inputs[1]);
   int desc[2];
   pipe(desc);
 
