@@ -171,9 +171,7 @@ void mario (char * name) {
 
   if (fork() == 0) {
     
-    FILE * p; 
-    //reading from pipe to stdin
-    printf("gets here 4.5\n");
+    FILE * p;
     dup2(fileno(p),STDIN_FILENO);
     printf("gets here 5\n");
     p = popen(commands[0],"r");
@@ -181,7 +179,7 @@ void mario (char * name) {
     execvp(args[0],args);
     printf("gets here 7\n");
     
-    fclose(p);
+    pclose(p);
   }
 
 }
