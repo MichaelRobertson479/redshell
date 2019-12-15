@@ -161,7 +161,6 @@ void mario (char * name) {
 
   close(desc[1]);
   close(desc[0]);
-  wait(&i);
 }
 
 int run (char * name) {
