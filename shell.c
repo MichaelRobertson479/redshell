@@ -164,26 +164,30 @@ close(file);
 //currently doesn't work if spaces
 void mario (char * name) {
   char ** commands = parse_pipe(name);
-  printf("command 1: %s\n",commands[1]);
   char ** args = malloc(sizeof(char*) * 2);
   args[0] = commands[1];
   args[1] = NULL;
 
   FILE * p;
+  dup2(fileno(p),STDIN_FILENO);
+  p = popen(command[0],"r");
+  execvp(args[0],args);
+  pclose(p);
 
-  if (fork() == 0) {
-    dup2(fileno(p),STDIN_FILENO);
-    p = popen(commands[0],"r");
-    printf("gets here 6\n");
-    int i;
-    wait(&i);
+
+  // if (fork() == 0) {
+  //   dup2(fileno(p),STDIN_FILENO);
+  //   p = popen(commands[0],"r");
+  //   printf("gets here 6\n");
+  //   int i;
+  //   wait(&i);
     
-    printf("gets here 7\n");
-    execvp(args[0],args);
+  //   printf("gets here 7\n");
+  //   execvp(args[0],args);
     
-    printf("gets here 8\n");
+  //   printf("gets here 8\n");
     
-  }
+  // }
 
 }
 
