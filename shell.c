@@ -165,7 +165,7 @@ close(file);
 void mario (char * name) {
 
   char ** commands = parse_pipe(name);
-  char ** args = {commands[1],NULL};
+  char ** args = parse_args(commands[1]);
   //our pipe
   FILE * p; 
 
