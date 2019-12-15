@@ -151,6 +151,7 @@ int mario (char * name) {
 
   if (fork() == 0) {
     dup2(desc[0],STDIN_FILENO);
+    close(desc[1]);
     char ** args = parse_args(rmfs(rmbs(inputs[0])));
     execvp(args[0],args);
   }
