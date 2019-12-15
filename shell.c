@@ -9,6 +9,8 @@
 #include <sys/wait.h>
 #include <dirent.h>
 
+char * home;
+
 //remove front spaces
 char * rmfs( char * line) {
   while (*line == ' ') {
@@ -186,7 +188,8 @@ int run (char * name) {
    }
 
    else {
-printf("to be implemented later\n");
+//printf("to be implemented later\n");
+chdir(home);
             }
           }
 
@@ -203,6 +206,7 @@ return 1;
 
 int main(int argc, char * argv[]){
 
+  home = getcwd();
   int running = 1;
 
   while (running) {
