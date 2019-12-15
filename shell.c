@@ -163,13 +163,15 @@ close(file);
 
 //currently doesn't work if spaces
 void mario (char * name) {
-  printf("gets here 1\n");
   char ** commands = parse_pipe(name);
-  printf("gets here 2\n");
   char ** args = parse_args(commands[1]);
-  printf("gets here 3\n");
-  //our pipe
-printf("gets here 4\n");
+
+  int i = 0;
+
+  while (args[i] != NULL) {
+    printf("args[%d]: %s\n",i,args[i]);
+  }
+
   if (fork() == 0) {
     
     FILE * p; 
