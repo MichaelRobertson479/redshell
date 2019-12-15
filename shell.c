@@ -140,11 +140,19 @@ int mario (char * name) {
 
   char ** inputs = parse_pipe(name);
 
+  int desc[2];
+  pipe(desc);
+
   if (fork() == 0) {
-    popen(inputs[0],"r");
-    popen(inputs[1],"w");
-    char ** args = parse_args(rmfs(inputs[0]));
-    execvp(args[0], args);
+    dup2(desc[1],STDOUT_FILENO);
+    char ** args = parse_args(rmfs(rmbs(inputs[1])));
+    execvp(args[0],args);
+  }
+
+  if (fork() == 0) {
+    dup2(desc[0],STDIN_FILENO);
+    char ** args = parse_args(rmfs(rmbs(inputs[0])));
+    execvp(args[0],args);
   }
 
   return 0;
