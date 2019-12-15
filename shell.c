@@ -135,38 +135,9 @@ close(file);
 
 }
 
-// void mario (char * name) {
-
-  
-//   char ** inputs = parse_pipe(name);
-  
-//   int desc[2];
-//   pipe(desc);
-
-//   if (fork() == 0) {
-//     dup2(desc[1],STDOUT_FILENO);
-//     char ** args0 = parse_args(inputs[0]);
-//     execvp(args0[0],args0);
-//   }
-
-
-//   if (fork() == 0) {
-//     dup2(desc[0],STDIN_FILENO);
-//     char ** args1 = parse_args(inputs[1]);
-//     close(desc[1]);
-//     execvp(args1[0],args1);
-//   }
-
-//   close(desc[1]);
-//   close(desc[0]);
-// }
-
-//currently doesn't work if spaces
 void mario (char * name) {
   char ** commands = parse_pipe(name);
-  char ** args = malloc(sizeof(char*) * 2);
-  args[0] = commands[1];
-  args[1] = NULL;
+  char ** args = parse_args(commands[1]);
 
   if (fork() == 0) {
     FILE * p = popen(commands[0],"r");
@@ -174,22 +145,6 @@ void mario (char * name) {
     execvp(args[0],args);
     pclose(p);
   }
-
-
-  // if (fork() == 0) {
-  //   dup2(fileno(p),STDIN_FILENO);
-  //   p = popen(commands[0],"r");
-  //   printf("gets here 6\n");
-  //   int i;
-  //   wait(&i);
-    
-  //   printf("gets here 7\n");
-  //   execvp(args[0],args);
-    
-  //   printf("gets here 8\n");
-    
-  // }
-
 }
 
 int run (char * name) {
