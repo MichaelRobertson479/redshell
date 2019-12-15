@@ -153,7 +153,7 @@ void mario (char * name) {
   if (fork() == 0) {
     dup2(desc[0],STDIN_FILENO);
     char ** args1 = parse_args(inputs[1]);
-    close(desc[1]);
+    //close(desc[1]);
     execvp(args1[0],args1);
   }
 
