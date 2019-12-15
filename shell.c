@@ -168,11 +168,13 @@ void mario (char * name) {
   args[0] = commands[1];
   args[1] = NULL;
 
-  FILE * p;
-  dup2(fileno(p),STDIN_FILENO);
-  p = popen(commands[0],"r");
-  execvp(args[0],args);
-  pclose(p);
+  if (fork() == 0) {
+    FILE * p;
+    dup2(fileno(p),STDIN_FILENO);
+    p = popen(commands[0],"r");
+    execvp(args[0],args);
+   pclose(p);
+  }
 
 
   // if (fork() == 0) {
