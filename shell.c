@@ -174,7 +174,7 @@ void mario (char * name) {
   //executes right command, reads from pipe
   p = popen(commands[1],"w");
 
-  close(p);
+  fclose(p);
 }
 
 int run (char * name) {
