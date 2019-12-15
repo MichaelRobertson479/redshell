@@ -173,7 +173,7 @@ void mario (char * name) {
   dup2(fileno(p),STDIN_FILENO);
   printf("gets here 5\n");
   p = popen(commands[0],"r");
-  if(fp == NULL) {
+  if(p == NULL) {
     printf("oof\n");
   }
   if (fork() == 0) {
