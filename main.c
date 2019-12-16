@@ -17,6 +17,8 @@ int main(int argc, char * argv[]){
 
   while (running) {
 
+    printf("redsh$ ");
+
     char name[500];
 
     fgets(name, 500, stdin);
@@ -40,7 +42,6 @@ int main(int argc, char * argv[]){
       running = run(name);
     }
   }
-
 
   return 0;
 }
