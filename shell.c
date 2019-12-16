@@ -118,7 +118,7 @@ void redirect (char * line, int x) {
       dup2(file,STDOUT_FILENO);
       execvp(args[0], args);
       close(file);
-
+      free(args);
       free(inputs);
     }
   }
@@ -133,6 +133,7 @@ void redirect (char * line, int x) {
       dup2(file,STDIN_FILENO);
       execvp(args[0], args);
       close(file);
+      free(args);
       free(inputs);
     }
   }
