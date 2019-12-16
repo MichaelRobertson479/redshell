@@ -199,6 +199,7 @@ int run (char * name) {
 
     else if (fork() == 0){
       execvp(args[0], args);
+      free(args);
     }
 
     else {
