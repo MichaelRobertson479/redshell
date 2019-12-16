@@ -17,7 +17,7 @@ int main(int argc, char * argv[]){
 
   while (running) {
 
-    printf("redsh$ ");
+    //printf("redsh$ ");
 
     char name[500];
 
