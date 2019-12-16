@@ -201,9 +201,9 @@ int run (char * name) {
       execvp(args[0], args);
     }
 
-    // else {
-    //   wait(NULL);
-    // }
+    else {
+      wait(NULL);
+    }
 
     free(args);
   }
