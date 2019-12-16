@@ -101,6 +101,9 @@ void redirect (char * line, int x) {
 
       close(fileRead);
       close(fileWrite);
+
+      free(inputs);
+      free(args);
     }
   }
 
@@ -115,6 +118,8 @@ void redirect (char * line, int x) {
       dup2(file,STDOUT_FILENO);
       execvp(args[0], args);
       close(file);
+
+      free(inputs);
     }
   }
 
@@ -128,6 +133,7 @@ void redirect (char * line, int x) {
       dup2(file,STDIN_FILENO);
       execvp(args[0], args);
       close(file);
+      free(inputs);
     }
   }
 }
@@ -142,6 +148,9 @@ void mario (char * name) {
     execvp(args[0],args);
     pclose(p);
   }
+
+  free(commands);
+  free(args);
 }
 
 int run (char * name) {
@@ -186,6 +195,8 @@ int run (char * name) {
     else {
       wait(NULL);
     }
+
+    free(args);
   }
   return 1;
 }
@@ -199,14 +210,13 @@ int main(int argc, char * argv[]){
 
     char name[500];
 
-      fgets(name, 500, stdin);
-      int i = 0;
-      while (name[i] != '\n') {
-        i++;
-      }
-      name[i] = '\0';
+    fgets(name, 500, stdin);
+    int i = 0;
+    while (name[i] != '\n') {
+      i++;
+    }
+    name[i] = '\0';
   
-
     if(strstr(name, ";") != NULL) {
       char ** commands = parse_many(name);
 
