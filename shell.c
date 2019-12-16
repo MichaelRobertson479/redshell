@@ -199,14 +199,13 @@ int main(int argc, char * argv[]){
 
     char name[500];
 
-    else {
       fgets(name, 500, stdin);
       int i = 0;
       while (name[i] != '\n') {
         i++;
       }
       name[i] = '\0';
-    }
+  
 
     if(strstr(name, ";") != NULL) {
       char ** commands = parse_many(name);
