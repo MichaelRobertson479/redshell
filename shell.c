@@ -118,7 +118,7 @@ void redirect (char * line, int x) {
     if(fork() == 0) {
       char ** inputs = parse_redir(line);
 
-      int file = open(inputs[1],O_TRUNC|O_WRONLY);
+      int file = open(inputs[1],O_CREAT|O_WRONLY);
 
       char ** args = parse_args(inputs[0]);
       dup2(file,STDOUT_FILENO);
@@ -199,7 +199,6 @@ int run (char * name) {
 
     else if (fork() == 0){
       execvp(args[0], args);
-      free(args);
     }
 
     else {
