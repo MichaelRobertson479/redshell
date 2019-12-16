@@ -14,6 +14,7 @@ by Michael Robertson and Michael Zhang
 	* Memory is not correctly allocated with malloc, leading to minor memory loss (aka amnesia :( ).
 	* Shell commands that don't actually exist do not return error messages; instead, they do nothing.
 	* After entering a non-existant shell command, entering exit as the following command will not cause the shell to exit. However, the next exit after that one will correctly register.
+	* Redirecting will not work with files that do not exist yet. Instead of creating the new file and then using it in the redirection, the redirection will just not work. This is very important. In case of a test that requires creating a new file with redirection, we have provided a dummy test file (dummyfile.txt) that may be redirected into and out of for test cases.
 	
 ## Files & Function Headers:
 shell.c - Handles all line parsing fucntions and runs all of the redirecting and piping algorithms
