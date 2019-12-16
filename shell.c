@@ -120,6 +120,7 @@ void redirect (char * line, int x) {
       execvp(args[0], args);
       close(file);
 
+      free(args);
       free(inputs);
     }
   }
@@ -134,6 +135,8 @@ void redirect (char * line, int x) {
       dup2(file,STDIN_FILENO);
       execvp(args[0], args);
       close(file);
+
+      free(args);
       free(inputs);
     }
   }
@@ -200,37 +203,4 @@ int run (char * name) {
     free(args);
   }
   return 1;
-}
-
-int main(int argc, char * argv[]){
-
-  getcwd(home,50);
-  int running = 1;
-
-  while (running) {
-
-    char name[500];
-
-    fgets(name, 500, stdin);
-    int i = 0;
-    while (name[i] != '\n') {
-      i++;
-    }
-    name[i] = '\0';
-  
-    if(strstr(name, ";") != NULL) {
-      char ** commands = parse_many(name);
-
-      int i = 0;
-      while (commands[i] != NULL){
-        running = run(commands[i]);
-        i++;
-      }
-    }
-
-    else{
-      running = run(name);
-    }
-  }
-  return 0;
 }
