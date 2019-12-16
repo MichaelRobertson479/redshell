@@ -118,7 +118,7 @@ void redirect (char * line, int x) {
     if(fork() == 0) {
       char ** inputs = parse_redir(line);
 
-      int file = open(inputs[1],O_CREAT|O_WRONLY);
+      int file = open(rmfs(rmbs(inputs[1])),O_CREAT|O_WRONLY);
 
       printf("file is %d\n",file);
 
