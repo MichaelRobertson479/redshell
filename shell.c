@@ -150,8 +150,6 @@ void mario (char * name) {
     dup2(fileno(p),STDIN_FILENO);
     execvp(args[0],args);
     pclose(p);
-    free(commands);
-    free(args);
   }
 
   free(commands);
