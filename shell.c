@@ -93,6 +93,7 @@ void redirect (char * line, int x) {
   // double redirect
   if (x == 0) {
     if(fork() == 0) {
+      umask(000);
       char ** inputs = parse_redir(line);
 
       int fileRead = open(inputs[1],O_RDONLY);
@@ -116,6 +117,8 @@ void redirect (char * line, int x) {
   // > redirect
   if (x > 0) {
     if(fork() == 0) {
+      umask(000);
+
       char ** inputs = parse_redir(line);
 
       int file = open(inputs[1],O_CREAT|O_RDWR|O_TRUNC,777);
