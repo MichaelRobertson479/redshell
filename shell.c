@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <dirent.h>
+#include "shell.h"
 
 char home[50];
 
