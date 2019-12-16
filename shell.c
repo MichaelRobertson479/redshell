@@ -199,10 +199,6 @@ int main(int argc, char * argv[]){
 
     char name[500];
 
-    if (argc > 1) {
-      strcpy(name, argv[1]);
-    }
-
     else {
       fgets(name, 500, stdin);
       int i = 0;
