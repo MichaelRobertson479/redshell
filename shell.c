@@ -10,6 +10,8 @@
 #include <dirent.h>
 #include "shell.h"
 
+char home[50];
+
 //remove front spaces
 char * rmfs( char * line) {
   while (*line == ' ') {
