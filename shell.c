@@ -118,12 +118,8 @@ void redirect (char * line, int x) {
     if(fork() == 0) {
       char ** inputs = parse_redir(line);
 
-      int file = open(inputs[1],O_TRUNC|O_WRONLY);
+      int file = open(inputs[1],O_CREAT|O_WRONLY);
 
-
-      if (file == -1) {
-        file = open(inputs[1],O_CREAT|O_WRONLY,777);
-      }
       printf("file is %d\n",file);
 
 
