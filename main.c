@@ -10,6 +10,8 @@
 #include <dirent.h>
 #include "shell.h"
 
+char home[50];
+
 int main(int argc, char * argv[]){
 
   getcwd(home,50);

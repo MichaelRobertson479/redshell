@@ -10,8 +10,6 @@
 #include <dirent.h>
 #include "shell.h"
 
-char home[50];
-
 //remove front spaces
 char * rmfs( char * line) {
   while (*line == ' ') {
@@ -35,7 +33,8 @@ char * rmbs( char * line) {
 }
 
 char ** parse_args( char * line ){
-  char ** args = malloc(sizeof(char*) * 10);
+  //char ** args = malloc(sizeof(char*) * 10);
+  char * args[10];
   char * current = line;
   int i = 0;
   while (current != NULL) {
