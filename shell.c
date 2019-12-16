@@ -39,8 +39,8 @@ char * rmbs( char * line) {
 }
 
 char ** parse_args( char * line ){
-  //char ** args = malloc(sizeof(char*) * 10);
-  char * args[10];
+  char ** args = malloc(sizeof(char*) * 10);
+  //char * args[10];
   char * current = line;
   int i = 0;
   while (current != NULL) {
