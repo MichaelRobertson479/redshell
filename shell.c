@@ -9,7 +9,7 @@
 #include <sys/wait.h>
 #include <dirent.h>
 
-char home[100];
+char home[50];
 
 //remove front spaces
 char * rmfs( char * line) {
@@ -84,57 +84,52 @@ char ** parse_pipe( char * line ){
 //add error messages (maybe)
 void redirect (char * line, int x) {
 
-// double redirect
-if (x == 0) {
-if(fork() == 0) {
-char ** inputs = parse_redir(line);
-
-int fileRead = open(inputs[1],O_RDONLY);
-int fileWrite = open(inputs[2],O_TRUNC|O_WRONLY);
-
-    char ** args = parse_args(inputs[0]);
-
-dup2(fileRead,STDIN_FILENO);
-dup2(fileWrite,STDOUT_FILENO);
-
-        execvp(args[0], args);
-
-close(fileRead);
-close(fileWrite);
-}
-}
-
-// > redirect
-if (x > 0) {
+  // double redirect
+  if (x == 0) {
     if(fork() == 0) {
+      char ** inputs = parse_redir(line);
 
-char ** inputs = parse_redir(line);
+      int fileRead = open(inputs[1],O_RDONLY);
+      int fileWrite = open(inputs[2],O_TRUNC|O_WRONLY);
 
-  int file = open(inputs[1],O_TRUNC|O_WRONLY);
+      char ** args = parse_args(inputs[0]);
 
-    char ** args = parse_args(inputs[0]);
-dup2(file,STDOUT_FILENO);
-        execvp(args[0], args);
-close(file);
+      dup2(fileRead,STDIN_FILENO);
+      dup2(fileWrite,STDOUT_FILENO);
+
+      execvp(args[0], args);
+
+      close(fileRead);
+      close(fileWrite);
     }
-}
+  }
+
+  // > redirect
+  if (x > 0) {
+    if(fork() == 0) {
+      char ** inputs = parse_redir(line);
+
+      int file = open(inputs[1],O_TRUNC|O_WRONLY);
+
+      char ** args = parse_args(inputs[0]);
+      dup2(file,STDOUT_FILENO);
+      execvp(args[0], args);
+      close(file);
+    }
+  }
 
   // < redirect
   if (x < 0) {
-    //printf("thisisatest\n");
      if(fork() == 0) {
+      char ** inputs = parse_redir(line);
+      int file = open(inputs[1],O_RDONLY);
 
-char ** inputs = parse_redir(line);
-
-  int file = open(inputs[1],O_RDONLY);
-
-    char ** args = parse_args(inputs[0]);
-dup2(file,STDIN_FILENO);
-        execvp(args[0], args);
-close(file);
-      }
+      char ** args = parse_args(inputs[0]);
+      dup2(file,STDIN_FILENO);
+      execvp(args[0], args);
+      close(file);
+    }
   }
-
 }
 
 void mario (char * name) {
@@ -151,63 +146,53 @@ void mario (char * name) {
 
 int run (char * name) {
 
-        if (strstr(name,"|") != NULL) {
-          //printf("detects pipe\n");
-          mario(name);
-        }
+  if (strstr(name,"|") != NULL) {
+    mario(name);
+  }
 
-        else if (strstr(name,">") != NULL && strstr(name,"<") != NULL) {
-          //printf("detects double arrow\n");
-          redirect(name,0);
-        }
+  else if (strstr(name,">") != NULL && strstr(name,"<") != NULL) {
+    redirect(name,0);
+  }
 
+  else if (strstr(name,">") != NULL) {
+    redirect(name,1);
+  }
 
-        else if (strstr(name,">") != NULL) {
-          //printf("detects >\n");
-          redirect(name,1);
-        }
+  else if (strstr(name,"<") != NULL) {
+    redirect(name,-1);
+  }
 
-        else if (strstr(name,"<") != NULL) {
-          //printf("detects <\n");
-          redirect(name,-1);
-        }
+  else {
+    char ** args = parse_args(rmfs(name));
 
-        else {
+    if (strcmp(args[0], "exit") == 0){
+      return 0;
+    }
 
-          char ** args = parse_args(rmfs(name));
+    else if (strcmp(args[0],"cd") == 0) {
+      if (args[1] != NULL) {
+        chdir(args[1]);
+      }
 
-          if (strcmp(args[0], "exit") == 0){
-            return 0;
-          }
+      else {
+        chdir(home);
+      }
+    }
 
-          //make it work for 'cd' with no secondary args
-          else if (strcmp(args[0],"cd") == 0) {
+    else if (fork() == 0){
+      execvp(args[0], args);
+    }
 
-   if (args[1] != NULL) {
-       chdir(args[1]);
-   }
-
-   else {
-//printf("to be implemented later\n");
-chdir(home);
-            }
-          }
-
-          else if (fork() == 0){
-            execvp(args[0], args);
-          }
- else {
-   wait(NULL);
- }
-}
-
-return 1;
+    else {
+      wait(NULL);
+    }
+  }
+  return 1;
 }
 
 int main(int argc, char * argv[]){
 
-  getcwd(home,100);
-  printf("home: %s\n",home);
+  getcwd(home,50);
   int running = 1;
 
   while (running) {
@@ -215,26 +200,23 @@ int main(int argc, char * argv[]){
     char name[500];
 
     if (argc > 1) {
-        strcpy(name, argv[1]);
+      strcpy(name, argv[1]);
     }
 
     else {
-        fgets(name, 500, stdin);
-        int i = 0;
-        while (name[i] != '\n') {
-            i++;
-        }
-        name[i] = '\0';
+      fgets(name, 500, stdin);
+      int i = 0;
+      while (name[i] != '\n') {
+        i++;
+      }
+      name[i] = '\0';
     }
 
-    //add in redirect check
     if(strstr(name, ";") != NULL) {
-
       char ** commands = parse_many(name);
 
       int i = 0;
       while (commands[i] != NULL){
-
         running = run(commands[i]);
         i++;
       }
@@ -244,6 +226,5 @@ int main(int argc, char * argv[]){
       running = run(name);
     }
   }
- 
   return 0;
 }
