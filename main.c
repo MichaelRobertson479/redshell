@@ -12,7 +12,7 @@
 
 int main(int argc, char * argv[]){
 
-  getcwd(home,50);
+  gethome();
   int running = 1;
 
   while (running) {

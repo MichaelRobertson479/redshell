@@ -6,4 +6,5 @@ char ** parse_redir( char * line );
 char ** parse_pipe( char * line );
 void redirect (char * line, int x);
 void mario (char * name);
+void gethome();
 int run (char * name);
