@@ -120,7 +120,8 @@ void redirect (char * line, int x) {
 
       int file = open(inputs[1],O_TRUNC|O_WRONLY);
 
-      printf("file is %d\n",file);
+      printf("file is %s\n",inputs[1]);
+
       if (file == -1) {
         file = open(inputs[1],O_CREAT|O_WRONLY,777);
       }
