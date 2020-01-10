@@ -33,13 +33,17 @@ int main(int argc, char * argv[]){
 
       int i = 0;
       while (commands[i] != NULL){
-        running = run(commands[i]);
-        i++;
+        if (fork() == 0) {
+          running = run(commands[i]);
+          i++;
+        }
       }
     }
 
     else{
-      running = run(name);
+      if (fork() == 0) {
+        running = run(name);
+      }
     }
   }
 
